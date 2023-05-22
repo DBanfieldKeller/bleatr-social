@@ -51,10 +51,19 @@ const bleatSchema = new mongoose.Schema({
     },
     replies: [replySchema]
 },
-{
-    toJSON: {
-        virtuals: true,
-        getters: true
-    },
-    id: false
-})
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true
+        },
+        id: false
+    }
+);
+
+// total reply count
+bleatSchema.virtual('replyCount').get(()=> this.replies.length);
+
+// create bleat model
+const Bleat = mongoose.model('Bleat', bleatSchema);
+
+module.exports = Bleat
