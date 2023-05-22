@@ -24,5 +24,37 @@ const replySchema = new mongoose.Schema(
             get: (newDate) => moment(newDate).format('MMM DD, YYYY [at] hh:mm a')
         }
 
+    },
+    {
+        toJSON: {
+            getters: true
+        }
     }
-)
+);
+
+// create bleat schema
+const bleatSchema = new mongoose.Schema({
+    bleatText: {
+        type: String,
+        required: true,
+        minLength: 1,
+        maxLength: 400
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        get: (newDate) => moment(newDate).format('MMM DD, YYYY [at] hh:mm a')
+    },
+    username: {
+        type: String,
+        required: true
+    },
+    replies: [replySchema]
+},
+{
+    toJSON: {
+        virtuals: true,
+        getters: true
+    },
+    id: false
+})
