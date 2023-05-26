@@ -61,7 +61,7 @@ const bleatSchema = new mongoose.Schema({
 );
 
 // total reply count
-bleatSchema.virtual('replyCount').get(()=> this.replies.length);
+bleatSchema.virtual('replyCount').get(()=> this.replies?.length);
 
 // create bleat model
 const Bleat = mongoose.model('Bleat', bleatSchema);

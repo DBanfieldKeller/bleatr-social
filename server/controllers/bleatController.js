@@ -1,8 +1,8 @@
-const {Bleat} = require('../models');
+const { Bleat } = require('../models');
 const auth = require('../utils/auth')
 
 const bleatController = {
-//    • Write Bleat, POST /api/bleat
+    //    • Write Bleat, POST /api/bleat
     //     ◦ Header:
     //     ▪ auth token
     // ◦ Req Body: 
@@ -13,15 +13,18 @@ const bleatController = {
     //     ▪ Returns new bleatID
 
     createBleat(req, res) {
-        const validatedToken = auth.userFromToken(req.header.token)
+        const validatedToken = auth.userFromToken(req.headers.token)
+        console.log(validatedToken)
         if (!validatedToken.verified) {
-            res.status(401).json({message: 'Please login to make bleats'})
+            res.status(401).json({ message: 'Please login to make bleats' })
             return
         }
         const username = validatedToken.username
         Bleat.create([
-            {bleatText: req.body.bleatText},
-            {username: username}
+            {
+                bleatText: req.body.bleatText,
+                username: username
+            },
         ])
             .then(dbBleatData => res.json(dbBleatData))
             .catch(err => res.status(500).json(err))
