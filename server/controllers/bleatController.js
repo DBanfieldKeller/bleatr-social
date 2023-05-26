@@ -27,3 +27,5 @@ const bleatController = {
             .catch(err => res.status(500).json(err))
     }
 };
+
+module.exports = bleatController

@@ -1,6 +1,6 @@
-// extract username from token
+const jwt= require('jsonwebtoken')
 require('dotenv').config()
-
+// extract username from token
 exports.userFromToken = (token) => {
     return jwt.verify(token, process.env.JWT_SECRET, (error, response) => {
         if (error) {
