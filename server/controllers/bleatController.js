@@ -49,7 +49,7 @@ const bleatController = {
     getRecentBleats(req, res) {
         Bleat.find({})
             .populate({ path: 'replies', select: '-__v'})
-            .select('__v')
+            .select('-__v')
             .limit(req.query.bleatNumber)
             .sort({createdAt: -1})
             .then(dbBleatData => res.json(dbBleatData))
