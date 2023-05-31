@@ -3,12 +3,14 @@ const {
     createBleat,
     deleteBleat,
     getRecentBleats,
-    getSingleBleat
+    getSingleBleat,
+    getBleatsByUser
 } = require('../../controllers/bleatController');
 
 // /api/bleats/
 router.route('/').post(createBleat);
-router.route('/:id').delete(deleteBleat).get(getSingleBleat)
-router.route('/recent').get(getRecentBleats)
+router.route('/:id').delete(deleteBleat).get(getSingleBleat);
+router.route('/recent').get(getRecentBleats);
+router.route('/users/:username').get(getBleatsByUser)
 
 module.exports = router

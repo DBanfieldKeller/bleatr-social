@@ -32,7 +32,7 @@ const bleatController = {
         Bleat.findOneAndDelete({ _id: req.params.id, username: username })
             .then(dbBleatData => {
                 if (!dbBleatData) {
-                    res.status(404).json({ message: 'Invalid bleat id and/or username'})
+                    res.status(404).json({ message: 'Invalid bleat id and/or username' })
                     return;
                 }
                 res.json(dbBleatData)
@@ -47,10 +47,10 @@ const bleatController = {
     // get recent bleats
     getRecentBleats(req, res) {
         Bleat.find({})
-            .populate({ path: 'replies', select: '-__v'})
+            .populate({ path: 'replies', select: '-__v' })
             .select('-__v')
             .limit(req.query.bleatNumber)
-            .sort({createdAt: -1})
+            .sort({ createdAt: -1 })
             .then(dbBleatData => res.json(dbBleatData))
             .catch(err => {
                 console.log(err)
@@ -60,21 +60,37 @@ const bleatController = {
 
     // get single bleat by ID
     getSingleBleat(req, res) {
-        Bleat.find({_id: req.params.id})
-        .populate({ path: 'replies', select: '-__v'})
-        .select('-__v')
-        .then(dbBleatData => {
-            console.log(dbBleatData)
-            if (!dbBleatData) {
-                res.status(404).json({ message: 'Invalid bleat ID'})
-                return;
-            }
-            res.json(dbBleatData)
-        })
-        .catch(err => {
-            console.log(err)
-            res.status(500).json(err)
-        })
+        Bleat.findOne({ _id: req.params.id })
+            .populate({ path: 'replies', select: '-__v' })
+            .select('-__v')
+            .then(dbBleatData => {
+                console.log(dbBleatData)
+                if (!dbBleatData) {
+                    res.status(404).json({ message: 'Invalid bleat ID' })
+                    return;
+                }
+                res.json(dbBleatData)
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json(err)
+            })
+    },
+
+    // get all bleats by username, returns empty array if user doesn't exist/has no bleats
+    getBleatsByUser(req, res) {
+        Bleat.find({ username: req.params.username })
+            .populate({ path: 'replies', select: '-__v' })
+            .select('-__v')
+            .limit(req.query.bleatNumber)
+            .then(dbBleatData => {
+                console.log(dbBleatData)
+                res.json(dbBleatData)
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json(err)
+            })
     }
 };
 
