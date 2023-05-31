@@ -31,7 +31,6 @@ const bleatController = {
         const username = validatedToken.username
         Bleat.findOneAndDelete({ _id: req.params.id, username: username })
             .then(dbBleatData => {
-                console.log(dbBleatData)
                 if (!dbBleatData) {
                     res.status(404).json({ message: 'Invalid bleat id and/or username'})
                     return;
@@ -57,6 +56,25 @@ const bleatController = {
                 console.log(err)
                 res.status(500).json(err)
             });
+    },
+
+    // get single bleat by ID
+    getSingleBleat(req, res) {
+        Bleat.find({_id: req.params.id})
+        .populate({ path: 'replies', select: '-__v'})
+        .select('-__v')
+        .then(dbBleatData => {
+            console.log(dbBleatData)
+            if (!dbBleatData) {
+                res.status(404).json({ message: 'Invalid bleat ID'})
+                return;
+            }
+            res.json(dbBleatData)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json(err)
+        })
     }
 };
 
