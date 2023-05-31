@@ -91,6 +91,31 @@ const bleatController = {
                 console.log(err)
                 res.status(500).json(err)
             })
+    },
+
+    // reply to bleat
+    replyToBleat(req, res) {
+        const validatedToken = auth.userFromToken(req.headers.token)
+        if (!validatedToken.verified) {
+            res.status(401).json({ message: 'Not logged in' })
+            return
+        }
+        const username = validatedToken.username
+        Bleat.findOneAndUpdate(
+            { _id: req.params.id },
+            { $push: { replies: { replyBody: req.body.replyText, username: username } } },
+            { new: true })
+            .populate({ path: 'replies', select: '-__v' })
+            .select('-__v')
+            .then(dbBleatData => {
+                if(!dbBleatData) {
+                    res.status(404).json({ message: 'No bleat with that ID'})
+                    return;
+                }
+                res.json(dbBleatData)
+            })
+            .catch( err => res.status(500).json(err))
+
     }
 };
 
