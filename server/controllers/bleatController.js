@@ -108,14 +108,37 @@ const bleatController = {
             .populate({ path: 'replies', select: '-__v' })
             .select('-__v')
             .then(dbBleatData => {
-                if(!dbBleatData) {
-                    res.status(404).json({ message: 'No bleat with that ID'})
+                if (!dbBleatData) {
+                    res.status(404).json({ message: 'No bleat with that ID' })
                     return;
                 }
                 res.json(dbBleatData)
             })
-            .catch( err => res.status(500).json(err))
+            .catch(err => res.status(500).json(err))
 
+    },
+
+    // delete reply
+    deleteReply(req, res) {
+        const validatedToken = auth.userFromToken(req.headers.token)
+        if (!validatedToken.verified) {
+            res.status(401).json({ message: 'Not logged in' })
+            return;
+        }
+        const username = validatedToken.username
+        Bleat.findOneAndUpdate(
+            { _id: req.params.bleatID },
+            { $pull: { replies: { _id: req.params.replyID, username: username } } },
+            { runValidators: true, new: true }
+        )
+            .then(dbBleatData => {
+                if (!dbBleatData) {
+                    res.status(404).json({ message: 'No bleat with that ID' })
+                    return;
+                }
+                res.json(dbBleatData)
+            })
+            .catch(err => res.status(400).json(err))
     }
 };
 
