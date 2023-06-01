@@ -65,6 +65,5 @@ bleatSchema.virtual('replyCount').get(()=> this.replies?.length);
 
 // create bleat model
 const Bleat = mongoose.model('Bleat', bleatSchema);
-const Reply = mongoose.model('Reply', replySchema)
 
-module.exports = {Bleat, Reply}
+module.exports = {Bleat}

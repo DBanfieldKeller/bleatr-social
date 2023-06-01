@@ -1,4 +1,4 @@
-const { Bleat, Reply } = require('../models');
+const { Bleat } = require('../models');
 const auth = require('../utils/auth')
 
 const bleatController = {
@@ -119,7 +119,6 @@ const bleatController = {
     },
 
     // delete reply
-    // TODO: figure out how to send error message for failed delete
     deleteReply(req, res) {
         const validatedToken = auth.userFromToken(req.headers.token)
         if (!validatedToken.verified) {
@@ -129,8 +128,10 @@ const bleatController = {
         const username = validatedToken.username
         Bleat.findOne({ _id: req.params.bleatID },)
             .then(dbBleatData => {
+                console.log(dbBleatData)
                 const reply = dbBleatData.replies.id(req.params.replyID)
                 console.log(reply)
+               
                 if (!dbBleatData) {
                     res.status(404).json({ message: 'No bleat with that ID' })
                     return;
@@ -149,8 +150,9 @@ const bleatController = {
                         res.json(dbBleatData)
                     })
                     .catch(err => res.status(400).json(err))
+                    return;
             })
-            .catch(err => res.status(400).json)
+            .catch(err => res.status(400).json(err))
     }
 };
 
