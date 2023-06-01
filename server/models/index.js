@@ -1,3 +1,3 @@
-const Bleat = require ('./Bleat');
+const {Bleat, Reply} = require ('./Bleat');
 
-module.exports = {Bleat}
+module.exports = {Bleat, Reply}

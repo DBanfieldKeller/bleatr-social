@@ -1,4 +1,4 @@
-const { Bleat } = require('../models');
+const { Bleat, Reply } = require('../models');
 const auth = require('../utils/auth')
 
 const bleatController = {
@@ -18,7 +18,7 @@ const bleatController = {
             },
         ])
             .then(dbBleatData => res.json(dbBleatData))
-            .catch(err => res.status(500).json(err))
+            .catch(err => res.status(400).json(err))
     },
 
     // delete bleat
@@ -39,7 +39,7 @@ const bleatController = {
             })
             .catch(err => {
                 console.log(err)
-                res.status(500).json(err)
+                res.status(400).json(err)
             })
 
     },
@@ -54,7 +54,7 @@ const bleatController = {
             .then(dbBleatData => res.json(dbBleatData))
             .catch(err => {
                 console.log(err)
-                res.status(500).json(err)
+                res.status(400).json(err)
             });
     },
 
@@ -73,7 +73,7 @@ const bleatController = {
             })
             .catch(err => {
                 console.log(err)
-                res.status(500).json(err)
+                res.status(400).json(err)
             })
     },
 
@@ -89,7 +89,7 @@ const bleatController = {
             })
             .catch(err => {
                 console.log(err)
-                res.status(500).json(err)
+                res.status(400).json(err)
             })
     },
 
@@ -114,7 +114,7 @@ const bleatController = {
                 }
                 res.json(dbBleatData)
             })
-            .catch(err => res.status(500).json(err))
+            .catch(err => res.status(400).json(err))
 
     },
 
@@ -127,19 +127,30 @@ const bleatController = {
             return;
         }
         const username = validatedToken.username
-        Bleat.findOneAndUpdate(
-            { _id: req.params.bleatID },
-            { $pull: { replies: { _id: req.params.replyID, username: username } } },
-            { runValidators: true, new: true }
-        )
+        Bleat.findOne({ _id: req.params.bleatID },)
             .then(dbBleatData => {
+                const reply = dbBleatData.replies.id(req.params.replyID)
+                console.log(reply)
                 if (!dbBleatData) {
                     res.status(404).json({ message: 'No bleat with that ID' })
                     return;
-                }
-                res.json(dbBleatData)
+                } else if (!reply) {
+                    res.status(404).json({ message: 'No reply with that ID' })
+                    return;
+                } else if (reply.username !== username) {
+                    res.status(401).json({ message: 'You cannot delete a reply that is not yours' });
+                    return;
+                } else Bleat.findOneAndUpdate(
+                    { _id: req.params.bleatID },
+                    { $pull: { replies: { _id: req.params.replyID, username: username } } },
+                    { runValidators: true, new: true }
+                )
+                    .then(dbBleatData => {
+                        res.json(dbBleatData)
+                    })
+                    .catch(err => res.status(400).json(err))
             })
-            .catch(err => res.status(400).json(err))
+            .catch(err => res.status(400).json)
     }
 };
 
