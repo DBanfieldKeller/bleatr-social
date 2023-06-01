@@ -119,6 +119,7 @@ const bleatController = {
     },
 
     // delete reply
+    // TODO: figure out how to send error message for failed delete
     deleteReply(req, res) {
         const validatedToken = auth.userFromToken(req.headers.token)
         if (!validatedToken.verified) {
