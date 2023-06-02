@@ -8,7 +8,7 @@ const bleatController = {
         const validatedToken = auth.userFromToken(req.headers.token)
         if (!validatedToken.verified) {
             res.status(401).json({ message: 'Not logged in' })
-            return
+            return;
         }
         const username = validatedToken.username
         Bleat.create([
@@ -29,13 +29,26 @@ const bleatController = {
             return
         }
         const username = validatedToken.username
-        Bleat.findOneAndDelete({ _id: req.params.id, username: username })
+        Bleat.findOne({ _id: req.params.id })
             .then(dbBleatData => {
+                const bleatUsername = dbBleatData?.username
                 if (!dbBleatData) {
-                    res.status(404).json({ message: 'Invalid bleat id and/or username' })
+                    res.status(404).json({ message: 'Invalid bleat ID' })
                     return;
+                } else if (bleatUsername !== username){
+                    res.status(401).json({ message: 'Cannot delete bleats belonging to other users' })
+                    return;
+                } else {
+                    Bleat.findOneAndDelete({ _id: req.params.id })
+                    .then(dbBleatData => {
+                        res.json(dbBleatData)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        res.status(400).json(err)
+                        return;
+                    })
                 }
-                res.json(dbBleatData)
             })
             .catch(err => {
                 console.log(err)
@@ -128,9 +141,7 @@ const bleatController = {
         const username = validatedToken.username
         Bleat.findOne({ _id: req.params.bleatID },)
             .then(dbBleatData => {
-                console.log(dbBleatData)
                 const reply = dbBleatData.replies.id(req.params.replyID)
-                console.log(reply)
                
                 if (!dbBleatData) {
                     res.status(404).json({ message: 'No bleat with that ID' })
