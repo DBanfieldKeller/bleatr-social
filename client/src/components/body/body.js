@@ -20,7 +20,7 @@ function Body() {
                     <Dropdown.Item href="#/action-3">100</Dropdown.Item>
                 </DropdownButton>
             </div>
-            <BleatContainer className='bleatContainer'></BleatContainer>
+            <BleatContainer></BleatContainer>
         </div>
     )
 }
