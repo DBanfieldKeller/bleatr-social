@@ -2,11 +2,13 @@
     .bleat {
         width: 75%
     }
-}
+};
 
 @media screen and (max-width: 600px) {
     .bleat {
         width: 100%
     }
-  }
+};
+
+
 
