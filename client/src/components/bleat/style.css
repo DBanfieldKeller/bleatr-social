@@ -1,0 +1,34 @@
+.bleat {
+    margin: 1%;
+}
+
+.bleat-header-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.header-item {
+    max-width: 25%;
+    padding-bottom: 1rem
+}
+
+.bleat-footer {
+    display: flex;
+    flex-direction: row;
+    align-items:flex-end;
+}
+
+@media screen and (min-width: 600px) {
+    .bleat {
+        width: 50%
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .bleat {
+        width: 100%
+    }
+}
+
