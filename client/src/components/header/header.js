@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
-function Header() {
+function Header(props) {
     return (
         <div>
             <Navbar bg="light" expand="lg">

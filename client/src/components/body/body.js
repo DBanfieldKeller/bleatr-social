@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import './style.css'
 
-function Body() {
+function Body(props) {
     return (
         <div>
             <div className='body'>
