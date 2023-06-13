@@ -23,6 +23,9 @@ function Bleat() {
                     With supporting text below as a natural lead-in to additional content.
                 </Card.Text>
             </Card.Body>
+            <Card.Footer className='bleat-footer'>
+                <Button variant='primary'>Delete 🗑️</Button>
+            </Card.Footer>
         </Card>
     )
 };
