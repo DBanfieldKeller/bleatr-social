@@ -6,13 +6,22 @@ import './style.css'
 function Bleat() {
     return (
         <Card className='bleat'>
-            <Card.Header>Featured</Card.Header>
+            <Card.Header className='bleat-header'>
+                <div className='bleat-header-row'>
+                    <div className='header-item' id='username'>Username</div>
+                    <div className='header-item' id='num-of-replies'># of Replies</div>
+                </div>
+                <div className='bleat-header-row'>
+                    <p>createdAt</p>
+                    <Button variant='primary'>Reply 💬</Button>
+                </div>
+
+            </Card.Header>
             <Card.Body>
                 <Card.Title>Special title treatment</Card.Title>
                 <Card.Text>
                     With supporting text below as a natural lead-in to additional content.
                 </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
             </Card.Body>
         </Card>
     )
