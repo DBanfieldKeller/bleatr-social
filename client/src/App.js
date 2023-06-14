@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import Header from './components/header/header';
 import Body from './components/body/body';
-import { set } from 'mongoose';
+import LoginModal from './components/login-modal/loginModal';
 
 
 function App() {
@@ -15,6 +15,8 @@ function App() {
     <div className="App">
       <Header
       setIsLoggedIn={setIsLoggedIn}/>
+      <LoginModal
+      handleLoggedInState={handleLoggedInState}/>
       <Body
       isLoggedIn= {isLoggedIn}/>
     </div>
