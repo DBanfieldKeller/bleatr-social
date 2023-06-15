@@ -24,7 +24,9 @@ function Body(props) {
                     <Dropdown.Item href="#/action-3">100</Dropdown.Item>
                 </DropdownButton>
             </div>
-            <BleatContainer></BleatContainer>
+            <BleatContainer
+            isLoggedIn={props.isLoggedIn}
+            />
         </div>
     )
 }

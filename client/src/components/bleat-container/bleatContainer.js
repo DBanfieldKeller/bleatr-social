@@ -3,10 +3,11 @@ import Bleat from '../bleat/bleat';
 import './style.css';
 
 
-function BleatContainer() {
+function BleatContainer(props) {
     return (
         <div className='bleat-container'>
-            <Bleat/>
+            <Bleat
+            isLoggedIn = {props.isLoggedIn}/>
             <Bleat/>
             <Bleat/>
         </div>

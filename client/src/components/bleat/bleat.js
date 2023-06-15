@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './style.css'
 
-function Bleat() {
+function Bleat(props) {
     return (
         <Card className='bleat'>
             <Card.Header className='bleat-header'>
@@ -13,7 +13,10 @@ function Bleat() {
                 </div>
                 <div className='bleat-header-row'>
                     <p>createdAt</p>
-                    <Button variant='primary'>Reply 💬</Button>
+                    {props.isLoggedIn
+                    ? <Button variant='primary'>Reply 💬</Button>
+                    : <div>Login to Reply</div>}
+                   
                 </div>
 
             </Card.Header>
