@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Login from "../login/login";
-import {login, register, verify} from "../../utils/userAPI";
+import Nav from 'react-bootstrap/Nav';
+import { login, register, verify } from "../../utils/userAPI";
 
 export default function LoginModal(props) {
   const [show, setShow] = useState(false);
@@ -113,17 +114,15 @@ export default function LoginModal(props) {
   return (
     <>
       <div>
-        {props.isLoggedIn ?
-          <Button
-            variant="outline-danger"
+        {props.isLoggedIn
+          ? <Nav.Link
             onClick={handleLogout}>
             Logout
-          </Button>:
-            <Button
-            variant="primary"
+          </Nav.Link>
+          : <Nav.Link
             onClick={handleShow}>
-            Login to Goatnet
-          </Button>}
+            Login/Register
+          </Nav.Link>}
       </div>
 
       <Modal show={show} onHide={handleClose}>
@@ -144,14 +143,14 @@ export default function LoginModal(props) {
           />
         </Modal.Body>
         <Modal.Footer>
-          {authMode === "login" ?
-            <Button
+          {authMode === "login"
+            ? <Button
               variant="primary"
               type="submit"
               onClick={handleLogin}>
               Login
-            </Button> :
-            <Button
+            </Button>
+            : <Button
               variant="primary"
               type="submit"
               onClick={handleRegister}>

@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import LoginModal from '../login-modal/loginModal';
 
 function Header(props) {
+
+    useEffect(() => console.log(props.isLoggedIn), [props.isLoggedIn])
+
     return (
         <div>
             <Navbar bg="light" expand="lg">
@@ -19,7 +23,13 @@ function Header(props) {
                             navbarScroll
                         >
                             <Nav.Link href="#action1">Home</Nav.Link>
-                            <Nav.Link href="#action2">My Bleats</Nav.Link>
+                            <LoginModal
+                                handleLoggedInState={props.handleLoggedInState}
+                                isLoggedIn={props.isLoggedIn} />
+                            {props.isLoggedIn
+                                ? <Nav.Link href="#action2">My Bleats</Nav.Link>
+                                : ""
+                            }
                         </Nav>
                         <Form className="d-flex">
                             <Form.Control
