@@ -4,19 +4,28 @@ import Card from 'react-bootstrap/Card';
 import './style.css'
 
 function Bleat(props) {
+
+    const youDidIt = (e) => {
+        e.stopPropagation()
+        console.log("you did it")
+    }
+    const youDidName = (e) => {
+        e.stopPropagation()
+        console.log("you did name")
+    }
     return (
         <Card className='bleat'>
-            <Card.Header className='bleat-header'>
+            <Card.Header onClick={youDidIt} className='bleat-header'>
                 <div className='bleat-header-row'>
-                    <div className='header-item' id='username'>Username</div>
+                    <div className='header-item' id='username' onClick={youDidName}>Username</div>
                     <div className='header-item' id='num-of-replies'># of Replies</div>
                 </div>
                 <div className='bleat-header-row'>
                     <p>createdAt</p>
                     {props.isLoggedIn
-                    ? <Button variant='primary'>Reply 💬</Button>
-                    : <div>Login to Reply</div>}
-                   
+                        ? <Button variant='primary'>Reply 💬</Button>
+                        : <div>Login to Reply</div>}
+
                 </div>
 
             </Card.Header>
