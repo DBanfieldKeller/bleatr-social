@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import BleatContainer from '../bleat-container/bleatContainer';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import './style.css'
 
-function Body() {
+function Body(props) {
+
     return (
         <div>
             <div className='body'>
-                <Button variant="primary" size="lg">
-                    New Bleat ➕
-                </Button>
+                {props.isLoggedIn
+                    ? <Button variant="primary" size="lg" >New Bleat ➕</Button>
+                    : <Button variant="primary" size="lg" className='invisible' >
+                        New Bleat ➕
+                    </Button>}
+
 
 
                 <DropdownButton id="dropdown-basic-button" title="# of Bleats" size='lg'>
@@ -20,7 +24,9 @@ function Body() {
                     <Dropdown.Item href="#/action-3">100</Dropdown.Item>
                 </DropdownButton>
             </div>
-            <BleatContainer></BleatContainer>
+            <BleatContainer
+            isLoggedIn={props.isLoggedIn}
+            />
         </div>
     )
 }
