@@ -6,7 +6,6 @@ import './style.css'
 function Bleat(props) {
 
     const youDidIt = (e) => {
-        e.stopPropagation()
         console.log("you did it")
     }
     const youDidName = (e) => {

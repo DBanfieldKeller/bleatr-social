@@ -7,9 +7,11 @@ function BleatContainer(props) {
     return (
         <div className='bleat-container'>
             <Bleat
-            isLoggedIn = {props.isLoggedIn}/>
-            <Bleat/>
-            <Bleat/>
+                isLoggedIn={props.isLoggedIn} />
+            <Bleat
+                isLoggedIn={props.isLoggedIn} />
+            <Bleat
+                isLoggedIn={props.isLoggedIn} />
         </div>
     )
 };

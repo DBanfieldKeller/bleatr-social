@@ -7,6 +7,8 @@ import './style.css'
 
 function Body(props) {
 
+    const  [currentPage, setCurrentPage] = useState('home')
+
     return (
         <div>
             <div className='body'>
